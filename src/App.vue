@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <v-main>
+    <v-main class="pa-8">
+      <NewPatientForm />
       <PatientsList />
     </v-main>
   </v-app>
@@ -8,4 +9,5 @@
 
 <script setup>
   import PatientsList from './components/PatientsList.vue';
+  import NewPatientForm from './components/NewPatientForm.vue';
 </script>

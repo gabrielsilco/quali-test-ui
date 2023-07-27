@@ -1,0 +1,123 @@
+<template>
+    <v-btn class="ml-0" @click="showDialog" variant="elevated" color="blue">Cadastrar paciente</v-btn>
+    <v-dialog v-model="dialog" width="90%">
+        <v-card>
+            <v-card-title>Cadastrar novo paciente</v-card-title>
+            <v-card-text>
+                <v-form>
+                    <v-row>
+                        <v-col cols="8">
+                            <v-text-field v-model="fullName" label="Nome completo"></v-text-field>
+                        </v-col>
+                        <v-col cols="4">
+                            <v-text-field v-model="cpf" label="CPF"></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="5">
+                            <v-text-field v-model="occupation" label="Ocupação"></v-text-field>
+                        </v-col>
+                        <v-col cols="3">
+                            <v-text-field v-model="dateOfBirth" label="Data de Nascimento" type="date"></v-text-field>
+                        </v-col>
+                        <v-col cols="2">
+                            <v-text-field v-model="weight" label="Peso (kg)" type="number"></v-text-field>
+                        </v-col>
+                        <v-col cols="2">
+                            <v-text-field v-model="height" label="Altura (cm)" type="number"></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <span>Já foi internado?</span>
+                    <v-radio-group v-model="everBeenAdmitted">
+                        <v-radio label="Sim" :value="true"></v-radio>
+                        <v-radio label="Não" :value="false"></v-radio>
+                    </v-radio-group>
+                    <v-row>
+                        <v-col cols="6">
+                            <v-combobox
+                                v-model="sports"
+                                label="Esportes que pratica"
+                                multiple
+                                :items="preDefinedSports"
+                            >
+                            </v-combobox>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-combobox
+                                v-model="familyHistory"
+                                label="Histórico familiar de doenças"
+                                multiple
+                                :items="preDefinedIllness"
+                            >
+                            </v-combobox>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="5">
+                            <v-text-field v-model="city" label="Cidade"></v-text-field>
+                        </v-col>
+                        <v-col cols="3">
+                            <v-text-field v-model="state" label="Estado"></v-text-field>
+                        </v-col>
+                        <v-col cols="4">
+                            <v-text-field v-model="country" label="País"></v-text-field>
+                        </v-col>
+                    </v-row>
+                </v-form>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn @click="registerPatient" variant="elevated" color="blue">Cadastrar</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+    data() {
+        return {
+            dialog: false,
+            preDefinedSports: ['Futebol', 'Musculação', 'Natação', 'Vôlei'],
+            preDefinedIllness: ['Cancer', 'Diabeters'],
+            fullName: '',
+            cpf: '',
+            occupation: '',
+            dateOfBirth: '',
+            weight: null,
+            height: null,
+            everBeenAdmitted: null,
+            sports: [],
+            familyHistory: [],
+            city: '',
+            state: '',
+            country: '',
+
+        }
+    },
+    methods: {
+        showDialog() {
+            this.dialog = true;
+        },
+        registerPatient() {
+            const newPatient = {
+                fullName: this.fullName,
+                dateOfBirth: this.dateOfBirth,
+                cpf: this.cpf,
+                weight: this.weight,
+                height: this.height,
+                occupation: this.occupation,
+                everBeenAdmitted: this.everBeenAdmitted,
+                sports: this.sports,
+                familyHistory: this.familyHistory,
+                city: this.city,
+                state: this.state,
+                country: this.country,
+            }
+            axios.post('http://localhost:3000/patients', newPatient)
+                .then(() => {this.$emit('patient-created')});
+        },
+    }
+}
+</script>
