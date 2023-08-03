@@ -5,7 +5,7 @@
             width="300px"
             height="400px"
             variant="tonal"
-            class="d-flex flex-column"
+            class="d-flex flex-column pa-3"
         >
             <v-card-title>{{ patient.fullName }}</v-card-title>
             <v-card-subtitle>{{ patient.dateOfBirth + ', ' + patient.occupation }}</v-card-subtitle>

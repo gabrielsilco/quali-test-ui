@@ -1,8 +1,9 @@
 <template>
   <v-app>
     <v-main class="pa-8">
-      <NewPatientForm />
-      <PatientsList />
+      <!-- <NewPatientForm />
+      <PatientsList /> -->
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
